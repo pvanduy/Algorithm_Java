@@ -6,8 +6,10 @@ This repository contains Java implementations of essential algorithms, focusing 
 
 1. [Merge Sort](#-merge-sort)
 2. [Binary Search](#-binary-search)
-3. [Prerequisites](#-prerequisites)
+3. [Prefix Sum](#-prefix-sum)
+4. [Prerequisites](#-prerequisites)
 
+Prefix Sum
 ---
 
 ## ⚡ Merge Sort
@@ -140,7 +142,7 @@ public class MergeSort {
 ![image](https://github.com/user-attachments/assets/542f7e1c-b49b-4304-abb4-3a9a0a737189)
 
 
-## ⚡Binary Search
+## ⚡ Binary Search
 Binary Search efficiently finds an element’s position in a sorted array by repeatedly dividing the search space in half.  
 📘 Tip: Binary Search only works on sorted data.  
 
@@ -238,8 +240,145 @@ public class BinarySearchExample {
 
 ![image](https://github.com/user-attachments/assets/c50594c0-8f3b-45a6-8eba-a7535cb0e54b)
 
+## ⚡ Two Pointers
+The **Two Pointers** technique is a powerful approach commonly used to solve array and string problems efficiently.  
+It involves using **two indices (pointers)** to iterate through data from either the same direction or opposite directions, reducing the need for nested loops.
 
-## Prerequisites
+### 🧩 Key Features
+| Property | Description |
+|-----------|--------------|
+| **Time Complexity** | O(n) |
+| **Space Complexity** | O(1) |
+| **Approach Type** | Iterative (uses two moving pointers) |
+| **Common Use Cases** | Pair sum, reverse array, remove duplicates, palindrome check |
+
+### 🧠 Implementation Steps
+#### 1️⃣ Initialize Two Pointers
+Decide how your pointers will move:
+   - **Opposite direction:** Start with one pointer at the beginning and one at the end.  
+   - **Same direction:** Start both pointers at the beginning and move the second pointer ahead to form a sliding window.
+
+Example initialization:
+```java
+   int left = 0;
+   int right = arr.length - 1;
+```
+#### 2️⃣ Iterate While Condition Holds
+   - Move the pointers based on the problem condition.
+```java
+   while (left < right) {
+       int sum = arr[left] + arr[right];
+   
+       if (sum == target) {
+           System.out.println("Pair found: (" + arr[left] + ", " + arr[right] + ")");
+           break;
+       } else if (sum < target) {
+           left++;   // Increase sum
+       } else {
+           right--;  // Decrease sum
+       }
+   }
+```
+#### 3️⃣ Stop Condition
+Stop when:
+   - Pointers cross each other ``(left >= right)``, or
+   - The required condition `(like sum == target)` is satisfied.
+
+#### 4️⃣ Two Pointer Template:  
+```java
+public class TwoPointersExample {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 6};
+        int target = 6;
+
+        int left = 0, right = arr.length - 1;
+
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+
+            if (sum == target) {
+                System.out.println("Pair found: (" + arr[left] + ", " + arr[right] + ")");
+                return;
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        System.out.println("No pair found.");
+    }
+}
+```
+
+## ⚡ Prefix Sum
+The **Prefix Sum Algorithm** is a simple yet powerful technique used to efficiently calculate **the sum of elements in a subarray**.  
+It precomputes cumulative sums so that each range sum query can be answered in **O(1)** time instead of recalculating from scratch every time.
+
+> 📘 **Tip:** Prefix Sum is extremely useful in problems involving **range queries**, **subarray sums**, and **cumulative data analysis**.
+
+### 🧩 Key Features
+
+| Property | Description |
+|-----------|--------------|
+| **Time Complexity (Preprocessing)** | O(n) |
+| **Time Complexity (Query)** | O(1) |
+| **Space Complexity** | O(n) |
+| **Approach Type** | Precomputation / Cumulative Sum |
+| **Common Use Cases** | Range sum queries, subarray calculations, 2D matrix sums |
+
+### 🧠 Implementation Steps
+#### 1️⃣ Compute Prefix Sum Array
+Given an array `arr[]`, create a new array `prefix[]` where:
+
+
+```java
+   prefix[i] = prefix[i - 1] + arr[i];
+
+   //example:
+   arr    = [2, 4, 6, 8, 10]
+   prefix = [2, 6, 12, 20, 30]
+```
+#### 2️⃣ Use Prefix Sum to Calculate Range Sum
+The sum of elements from index l to r can be found using:
+```java
+   sum(l, r) = prefix[r] - prefix[l - 1]
+```
+
+#### 3️⃣ Prefix Sum Template
+```java
+public class PrefixSumExample {
+    public static void main(String[] args) {
+        //Given an array. what is sum of range 1 to 3
+        int[] arr = {2, 4, 6, 8, 10};
+        int n = arr.length;
+
+        int[] prefix = new int[n];
+        prefix[0] = arr[0];
+
+        // Step 1️⃣: Compute prefix sums
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i - 1] + arr[i];
+        }
+
+        // Step 2️⃣: Answer range sum queries
+        int l = 1, r = 3; // Example: sum of elements from index 1 to 3
+        int rangeSum = prefix[r] - (l > 0 ? prefix[l - 1] : 0);
+
+        System.out.println("Prefix Array: " + java.util.Arrays.toString(prefix));
+        System.out.println("Sum from index " + l + " to " + r + " = " + rangeSum);
+    }
+}
+
+Index:    0   1   2   3   4
+Array:    2   4   6   8   10
+Prefix:   2   6  12  20   30
+
+Sum(1,3) = prefix[3] - prefix[0]
+         = 20 - 2 = 18 ✅
+
+```
+
+## 🧰 Prerequisites
 
 To run the code, you need to have the following installed:
 
