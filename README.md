@@ -309,6 +309,7 @@ public class TwoPointersExample {
     }
 }
 ```
+<img width="205" height="246" alt="image" src="https://github.com/user-attachments/assets/7bda6f7d-e388-427c-aabd-ba1ba4792072" />
 
 ## ⚡ Prefix Sum
 The **Prefix Sum Algorithm** is a simple yet powerful technique used to efficiently calculate **the sum of elements in a subarray**.  
@@ -377,6 +378,7 @@ Sum(1,3) = prefix[3] - prefix[0]
          = 20 - 2 = 18 ✅
 
 ```
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/5479f706-f3d7-47ec-a366-459bf6648323" />
 
 ## 🧰 Prerequisites
 
