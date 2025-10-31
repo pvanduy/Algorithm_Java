@@ -7,9 +7,11 @@ This repository contains Java implementations of essential algorithms, focusing 
 1. [Merge Sort](#-merge-sort)
 2. [Binary Search](#-binary-search)
 3. [Prefix Sum](#-prefix-sum)
-4. [Prerequisites](#-prerequisites)
+4. [Linked List](#-linked-list)
+5. [Stack](#-stack)
+6. [Queue](#-queue)
+7. [Prerequisites](#-prerequisites)
 
-Prefix Sum
 ---
 
 ## ⚡ Merge Sort
@@ -141,6 +143,7 @@ public class MergeSort {
 ```
 ![image](https://github.com/user-attachments/assets/542f7e1c-b49b-4304-abb4-3a9a0a737189)
 
+---
 
 ## ⚡ Binary Search
 Binary Search efficiently finds an element’s position in a sorted array by repeatedly dividing the search space in half.  
@@ -240,6 +243,8 @@ public class BinarySearchExample {
 
 ![image](https://github.com/user-attachments/assets/c50594c0-8f3b-45a6-8eba-a7535cb0e54b)
 
+---
+
 ## ⚡ Two Pointers
 The **Two Pointers** technique is a powerful approach commonly used to solve array and string problems efficiently.  
 It involves using **two indices (pointers)** to iterate through data from either the same direction or opposite directions, reducing the need for nested loops.
@@ -311,6 +316,8 @@ public class TwoPointersExample {
 ```
 <img width="205" height="246" alt="image" src="https://github.com/user-attachments/assets/7bda6f7d-e388-427c-aabd-ba1ba4792072" />
 
+---
+
 ## ⚡ Prefix Sum
 The **Prefix Sum Algorithm** is a simple yet powerful technique used to efficiently calculate **the sum of elements in a subarray**.  
 It precomputes cumulative sums so that each range sum query can be answered in **O(1)** time instead of recalculating from scratch every time.
@@ -380,9 +387,277 @@ Sum(1,3) = prefix[3] - prefix[0]
 ```
 <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/5479f706-f3d7-47ec-a366-459bf6648323" />
 
+---
+
+## ⚡ Linked List
+A **Linked List** is a linear data structure in which elements (called **nodes**) are connected using **pointers** instead of being stored in contiguous memory like arrays.  
+Each node contains **data** and a **reference (link)** to the next node in the sequence.
+
+> 📘 **Tip:** Linked Lists are great for **dynamic memory allocation** and when you need **frequent insertions or deletions**.
+
+---
+
+### 🧩 Key Features
+
+| Property | Description |
+|-----------|--------------|
+| **Structure Type** | Linear data structure (non-contiguous memory) |
+| **Components** | `Node` (data + next pointer) |
+| **Insertion/Deletion** | O(1) at head or tail (with reference) |
+| **Access Time** | O(n) (must traverse from head) |
+| **Variants** | Singly, Doubly, and Circular Linked Lists |
+| **Memory Usage** | Extra memory for pointer(s) |
+
+---
+### 🧠 Implementation Steps
+
+#### 1️⃣ Define a Node Class
+Each node stores:
+- The **data value**
+- A reference to the **next node**
+
+```java
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+```
+
+#### 2️⃣ Linked List Template
+
+```java
+public class LinkedList {
+    Node head;
+
+    // Add a new node at the end
+    public void append(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+
+    // Print all elements
+    public void printList() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(10);
+        list.append(20);
+        list.append(30);
+
+        System.out.println("Linked List:");
+        list.printList();
+    }
+}
+```
+<img width="2768" height="1238" alt="image" src="https://github.com/user-attachments/assets/a848484e-9f66-4d84-a142-0817bd96b2fd" />
+
+---
+
+## ⚡ Stack
+A **Stack** is a linear data structure that follows the **LIFO (Last In, First Out)** principle.  
+This means the **last element added** to the stack will be the **first one removed**.  
+
+> 📘 **Tip:** Think of a stack as a stack of plates — you can only take the top one off first.
+
+---
+
+### 🧩 Key Features
+
+| Property | Description |
+|-----------|--------------|
+| **Structure Type** | Linear |
+| **Access Order** | LIFO (Last In, First Out) |
+| **Insertion / Deletion** | At the top only |
+| **Time Complexity** | O(1) for `push()` and `pop()` |
+| **Common Operations** | `push()`, `pop()`, `peek()`, `isEmpty()` |
+| **Typical Use Cases** | Undo operations, expression evaluation, DFS, parentheses validation |
+
+---
+
+### 🧠 Implementation Steps
+
+#### 1️⃣ Define a Stack Structure
+You can use either:
+- **Built-in Java Stack** (`java.util.Stack`), or  
+- **Custom implementation** using an array or `LinkedList`.
+
+Example using Java’s built-in class:
+```java
+import java.util.Stack;
+
+public class StackExample {
+    public static void main(String[] args) {
+        // Create a stack
+        Stack<Integer> stack = new Stack<>();
+
+        // Push elements
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        // Peek top element
+        System.out.println("Top element: " + stack.peek());
+
+        // Pop elements
+        System.out.println("Popped: " + stack.pop());
+        System.out.println("Popped: " + stack.pop());
+
+        // Check if stack is empty
+        System.out.println("Is stack empty? " + stack.isEmpty());
+    }
+}
+```
+
+<img width="545" height="361" alt="image" src="https://github.com/user-attachments/assets/5e61a1c6-6f97-40b5-be9f-7a8b5534eb88" />
+
+---
+
+## ⚡ Queue
+
+A **Queue** is a linear data structure that follows the **FIFO (First In, First Out)** principle.  
+It works just like a real-life queue — the first person to enter the line is the first to leave.
+
+> 📘 **Tip:** Queue is ideal for managing tasks in order — such as processing requests, scheduling jobs, or buffering data.
+
+---
+
+### 🧩 Key Features
+
+| Property | Description |
+|-----------|--------------|
+| **Order** | First In, First Out (FIFO) |
+| **Insertion (Enqueue)** | Adds an element at the **rear (end)** |
+| **Deletion (Dequeue)** | Removes an element from the **front** |
+| **Time Complexity** | O(1) for enqueue/dequeue operations |
+| **Common Implementations** | Array, Linked List, Priority Queue, Deque |
+| **Applications** | Task scheduling, BFS traversal, caching, buffering |
+
+---
+
+### 🧠 Implementation Steps
+
+#### 1️⃣ Define a Queue Structure
+We can implement a queue using an array or a linked list.  
+Below is a simple **array-based queue** implementation:
+
+```java
+public class Queue {
+    private int[] arr;
+    private int front, rear, size, capacity;
+
+    // Constructor
+    public Queue(int capacity) {
+        this.capacity = capacity;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    // Check if queue is full
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    // Check if queue is empty
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    // Step 2️⃣: Enqueue - Add element to the rear
+    public void enqueue(int item) {
+        if (isFull()) {
+            System.out.println("Queue is full!");
+            return;
+        }
+        rear = (rear + 1) % capacity; // circular increment
+        arr[rear] = item;
+        size++;
+        System.out.println(item + " enqueued to queue.");
+    }
+
+    // Step 3️⃣: Dequeue - Remove element from the front
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        int item = arr[front];
+        front = (front + 1) % capacity; // circular increment
+        size--;
+        System.out.println(item + " dequeued from queue.");
+        return item;
+    }
+
+    // Peek the front element
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return -1;
+        }
+        return arr[front];
+    }
+
+    // Display all elements
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty!");
+            return;
+        }
+        System.out.print("Queue elements: ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(arr[(front + i) % capacity] + " ");
+        }
+        System.out.println();
+    }
+
+    // Main method to test
+    public static void main(String[] args) {
+        Queue queue = new Queue(5);
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.display();
+
+        queue.dequeue();
+        queue.display();
+
+        System.out.println("Front element: " + queue.peek());
+    }
+}
+```
+
+<img width="1082" height="384" alt="image" src="https://github.com/user-attachments/assets/34160dbe-440c-4f8a-821d-45853c9d2d31" />
+
+---
+
 ## 🧰 Prerequisites
 
 To run the code, you need to have the following installed:
 
 - Java Development Kit (JDK) 8 or higher
 - Any Java IDE (e.g., IntelliJ IDEA, Eclipse) or a text editor with Java support (e.g., VS Code)
+- [Road MAP](https://neetcode.io/roadmap)
