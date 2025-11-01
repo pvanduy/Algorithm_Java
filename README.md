@@ -10,7 +10,8 @@ This repository contains Java implementations of essential algorithms, focusing 
 4. [Linked List](#-linked-list)
 5. [Stack](#-stack)
 6. [Queue](#-queue)
-7. [Prerequisites](#-prerequisites)
+7. [Sliding Window](#-sliding-window)
+8. [Prerequisites](#-prerequisites)
 
 ---
 
@@ -140,6 +141,12 @@ public class MergeSort {
         System.out.println();
     }
 }
+
+Original Array:
+38 27 43 3 9 82 10 
+
+Sorted Array:
+3 9 10 27 38 43 82
 ```
 ![image](https://github.com/user-attachments/assets/542f7e1c-b49b-4304-abb4-3a9a0a737189)
 
@@ -239,6 +246,13 @@ public class BinarySearchExample {
         }
     }
 }
+Array: [1, 3, 5, 7, 9, 11]
+Target: 7
+
+Step 1: middle = 2 → arr[2] = 5 → target > 5 → move right
+Step 2: middle = 4 → arr[4] = 9 → target < 9 → move left
+Step 3: middle = 3 → arr[3] = 7 → ✅ found!
+
 ```
 
 ![image](https://github.com/user-attachments/assets/c50594c0-8f3b-45a6-8eba-a7535cb0e54b)
@@ -313,6 +327,12 @@ public class TwoPointersExample {
         System.out.println("No pair found.");
     }
 }
+Array: [1, 2, 3, 4, 6], Target = 6
+
+Step 1: left=0 (1), right=4 (6) → sum=7 → too high → move right--
+Step 2: left=0 (1), right=3 (4) → sum=5 → too low → move left++
+Step 3: left=1 (2), right=3 (4) → sum=6 ✅ Found!
+
 ```
 <img width="205" height="246" alt="image" src="https://github.com/user-attachments/assets/7bda6f7d-e388-427c-aabd-ba1ba4792072" />
 
@@ -528,6 +548,15 @@ public class StackExample {
         System.out.println("Is stack empty? " + stack.isEmpty());
     }
 }
+Step 1️⃣: push(10) → Stack: [10]
+Step 2️⃣: push(20) → Stack: [10, 20]
+Step 3️⃣: push(30) → Stack: [10, 20, 30]
+Step 4️⃣: peek() → Top element: 30
+Step 5️⃣: pop() → Popped 30 → Stack: [10, 20]
+Step 6️⃣: pop() → Popped 20 → Stack: [10]
+Step 7️⃣: isEmpty() → ❌ false (still has [10])
+
+✅ Final Stack: [10]
 ```
 
 <img width="545" height="361" alt="image" src="https://github.com/user-attachments/assets/5e61a1c6-6f97-40b5-be9f-7a8b5534eb88" />
@@ -648,9 +677,114 @@ public class Queue {
         System.out.println("Front element: " + queue.peek());
     }
 }
+Queue capacity = 5
+
+Step 1️⃣: enqueue(10) → Queue: [10]
+Step 2️⃣: enqueue(20) → Queue: [10, 20]
+Step 3️⃣: enqueue(30) → Queue: [10, 20, 30]
+Step 4️⃣: display() → Output: Queue elements: 10 20 30
+Step 5️⃣: dequeue() → Removed 10 → Queue: [20, 30]
+Step 6️⃣: display() → Output: Queue elements: 20 30
+Step 7️⃣: peek() → Front element = 20
+
+✅ Final Queue State: [20, 30]
+📍 Front = 20, Rear = 30, Size = 2
 ```
 
 <img width="1082" height="384" alt="image" src="https://github.com/user-attachments/assets/34160dbe-440c-4f8a-821d-45853c9d2d31" />
+
+---
+
+## ⚡ Sliding Window
+
+The **Sliding Window** technique is a powerful approach used to solve problems that involve **contiguous subarrays or substrings**.  
+
+> 📘 **Tip:** Sliding Window is most effective when the problem involves **subsets of consecutive elements** (like subarrays or substrings).
+
+---
+
+### 🧩 Key Features
+
+| Property | Description |
+|-----------|--------------|
+| **Time Complexity** | O(n) |
+| **Space Complexity** | O(1) or O(k), depending on the problem |
+| **Approach Type** | Iterative (dynamic window adjustment) |
+| **Common Use Cases** | Maximum/Minimum sum subarray, longest substring, counting elements within range |
+
+---
+
+### 🧠 Implementation Steps
+
+#### 1️⃣ Define the Window
+Decide what your window represents (for example: **a fixed-length subarray** or **a variable-length substring**).  
+Set two pointers:
+```java
+int left = 0;
+int right = 0;
+```
+   - The window covers all elements between left and right.  
+   - You’ll move right to expand the window and left to shrink it.
+
+     
+#### 2️⃣ Expand the Window
+Increase right to include new elements into the current window:
+```java
+   currentSum += arr[right];
+```
+
+If the window size or condition exceeds the requirement (for example, window size > k), shrink it by moving left:
+```java
+   currentSum -= arr[left];
+   left++;
+```
+#### 3️⃣ Update the Result
+
+After each adjustment, update your desired result (e.g., maximum sum, count, or length):
+```java
+   maxSum = Math.max(maxSum, currentSum);
+```
+
+#### Sliding Window Template
+```java
+public class SlidingWindowExample {
+    public static void main(String[] args) {
+        int[] arr = {2, 1, 5, 1, 3, 2};
+        int k = 3;
+        System.out.println("Maximum sum of subarray of size " + k + ": " + maxSumSubarray(arr, k));
+    }
+
+    public static int maxSumSubarray(int[] arr, int k) {
+        int windowSum = 0, maxSum = 0;
+
+        // Compute sum of first window
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+        maxSum = windowSum;
+
+        // Slide the window
+        for (int right = k; right < arr.length; right++) {
+            windowSum += arr[right] - arr[right - k]; // add new, remove old
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+Array: [2, 1, 5, 1, 3, 2]
+k = 3
+
+Step 1: Window [2, 1, 5] → sum = 8
+Step 2: Window [1, 5, 1] → sum = 7
+Step 3: Window [5, 1, 3] → sum = 9 ✅
+Step 4: Window [1, 3, 2] → sum = 6
+
+Maximum sum = 9
+
+}
+```
+
+<img width="785" height="400" alt="image" src="https://github.com/user-attachments/assets/66aa8b98-d823-4ee3-9976-b539aae6b5f0" />
 
 ---
 
